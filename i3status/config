@@ -1,0 +1,79 @@
+general{
+	colors = true
+	color_good = '#17dff5'
+	color_degraded = '#17dff5'
+	color_bad = "#b20606"
+	interval = 3
+	separator = ""
+	color_separator = "#097f8c" 
+	markup = "pango"
+}
+
+
+cpu_temperature 0 {
+	format="<span font=' Sans Italic 11' color='#6296fb'> %degrees °C </span>"
+	max_threshold = 60
+   #	format_above_threshold:[W] cpu temp: %degree 
+}
+
+cpu_usage {
+	format="<span  font=' Sans Italic 11'color='#f2aa0e'>%usage</span>"
+	degraded_threshold = 90
+	max_threshold = 95
+	}
+
+wireless wlan0 {
+        format_up = "<span font=' Sans 10'> %quality </span>"
+		format_bitrate="%g %cb/s"
+        format_down =" "
+
+}
+
+ethernet eth0 {
+        format_up ="<span  font=' Sans Italic 11'> Eth: %ip (%speed)</span>"
+        format_down = "<span  font=' Sans Italic 11'>Eth:DOWN </span>"
+}
+
+disk "/" {
+	format = "<span  font=' Sans 10' color='#17dff5'> %free</span>"
+	}
+
+battery 0 {
+	format = "<span font=' Sans 10' color='#17dff5'> %percentage</span>"
+	format_percentage = "%.02f%s"
+	last_full_capacity = true
+	threshold_type=percentage
+	path = "/sys/class/power_supply/BAT%d/uevent"
+	low_threshold=20
+	separator = false
+	separator_block_width = 5
+	status_chr ="<span font=' Sans Italic 11' color='#17dff5'> %percentage</span>"
+	}
+
+memory {
+	memory_used_method = "classical"
+	format="<span font=' Sans 10' color='#17dff5'>%used</span>"
+}
+
+volume master {
+        format ="<span  font=' Sans 10' color='#17dff5'> %volume</span>"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+tztime local {
+		format = "<span  font=' Sans 10' color='#17dff5'>  %d/%m/%Y</span> <span font=' Sans 10' color='#17dff5'>%H:%M</span>"
+        #hide_if_equals_localtime = true
+	}
+
+order += "volume master"
+order += "wireless wlan0"
+#order += "ethernet eth0"
+#order += "cpu_usage"
+#order += "cpu_temperature 0"
+order += "disk /"
+order += "memory"
+order += "tztime local"
+order += "battery 0"
